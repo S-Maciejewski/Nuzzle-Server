@@ -5,6 +5,9 @@ module.exports = {
 
     tokenMap: 'select * from D_TokenMap;',
 
+    getUser(userID) {
+        return `select * from F_Users where ID = ${userID};`;
+    },
 
     // Offer
     offers: 'select * from F_Offers;',
@@ -28,7 +31,7 @@ module.exports = {
         '${params.ImageURL}');`;
     },
 
-    
+
     // OfferType
     offerTypes: `select * from D_OfferType`,
 

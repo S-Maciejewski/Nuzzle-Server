@@ -61,6 +61,13 @@ app.post('/login', (req, res) => {
     res.send(getAuthorization(req.body.login, req.body.password));
 });
 
+app.get('/user', (req, res) => {
+    getQueryResult(queries.getUser(getUserID(req.headers.authorization)), (err, result) => res.send(result));
+});
+
+app.get('/user/:id', (req, res) => {
+    getQueryResult(queries.getUser(req.params.id), (err, result) => res.send(result));
+});
 
 // Offer
 app.post('/offer', (req, res) => {
