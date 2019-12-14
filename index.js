@@ -61,6 +61,8 @@ app.post('/login', (req, res) => {
     res.send(getAuthorization(req.body.login, req.body.password));
 });
 
+
+// Offer
 app.post('/offer', (req, res) => {
     console.debug('POST /offer, req.body:', req.body);
     res.send({ success: executeUpdateQuery(queries.postOffer(getUserID(req.headers.authorization), req.body)).open });
@@ -70,12 +72,36 @@ app.get('/offer', (req, res) => {
     getQueryResult(queries.offers, (err, result) => res.send(result));
 });
 
+app.get('/myOffers', (req, res) => {
+    getQueryResult(queries.getMyOffers(getUserID(req.headers.authorization)), (err, result) => res.send(result));
+});
+
 app.get('/offer/:id', (req, res) => {
     getQueryResult(queries.getOffer(req.params.id), (err, result) => res.send(result));
 });
 
 app.delete('/offer/:id', (req, res) => {
     res.send({ success: executeUpdateQuery(queries.deleteOffer(req.params.id)).open });
+});
+
+
+// OfferType
+app.get('/offerType', (req, res) => {
+    getQueryResult(queries.offerTypes, (err, result) => res.send(result));
+});
+
+// Address
+app.post('/address', (req, res) => {
+    console.debug('POST /address, req.body:', req.body);
+    res.send({ success: executeUpdateQuery(queries.postAddress(getUserID(req.headers.authorization), req.body)).open });
+});
+
+app.get('/address', (req, res) => {
+    getQueryResult(queries.getMyAddresses(getUserID(req.headers.authorization)), (err, result) => res.send(result));
+});
+
+app.get('/address/:id', (req, res) => {
+    getQueryResult(queries.getAddress(req.params.id), (err, result) => res.send(result));
 });
 
 setupServer();
