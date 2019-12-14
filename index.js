@@ -18,8 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 
 
 function connect() {
+    // DBMS should be changed if we proceed to production, as SQLite doesn't support concurrency
     db = new sqlite3.Database(dbPath, (err) => {
-        console.log('Connection to SQLite failed, perhaps database file is missing?', err);
+        console.log('Connection to SQLite error occured, perhaps database file is missing? Error:', err); // null error is thrown for some reason, even though connection is working properly
     });
 
     // For demo purposes only, tokens should be JWT with HS256 encryption
@@ -44,25 +45,37 @@ function getAuthorization(login, password) {
 }
 
 function getUserID(token) {
-    return tokenMap.filter(entry => entry.Token === token)[0].UserID;
+    return tokenMap.filter(entry => entry.Token === token.replace('Bearer ', ''))[0].UserID;
 }
 
+function executeUpdateQuery(query) {
+    console.log('Executing update query:', query);
+    return db.run(query);
+}
+
+function getQueryResult(query, callback) {
+    return db.all(query, callback);
+}
+// No token validation on each request implemented for now, if we proceed to production: authentication on each request
 app.post('/login', (req, res) => {
-    try {
-        res.send(getAuthorization(req.body.login, req.body.password));
-    } catch (err) {
-        console.log('Login failed with error ', err);
-    }
+    res.send(getAuthorization(req.body.login, req.body.password));
 });
 
 app.post('/offer', (req, res) => {
-    console.log(getUserID(req.headers.authorization));
+    console.debug('POST /offer, req.body:', req.body);
+    res.send({ success: executeUpdateQuery(queries.postOffer(getUserID(req.headers.authorization), req.body)).open });
+});
 
-    //TODO Post offer
-})
+app.get('/offer', (req, res) => {
+    getQueryResult(queries.offers, (err, result) => res.send(result));
+});
 
-app.get('/test', (req, res) => {
-    res.send({ success: true })
-})
+app.get('/offer/:id', (req, res) => {
+    getQueryResult(queries.getOffer(req.params.id), (err, result) => res.send(result));
+});
+
+app.delete('/offer/:id', (req, res) => {
+    res.send({ success: executeUpdateQuery(queries.deleteOffer(req.params.id)).open });
+});
 
 setupServer();

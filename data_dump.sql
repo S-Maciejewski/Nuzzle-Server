@@ -1,0 +1,16 @@
+INSERT INTO D_OfferType (ID, Type) VALUES (1, 'Szukam opiekuna');
+INSERT INTO D_OfferType (ID, Type) VALUES (2, 'Zaopiekuję się');
+INSERT INTO D_OfferType (ID, Type) VALUES (3, 'Wspólne spacery');
+INSERT INTO D_OfferType (ID, Type) VALUES (4, 'dummyToken');
+INSERT INTO D_Password (UserID, Password) VALUES (1, 'jan');
+INSERT INTO D_Password (UserID, Password) VALUES (2, 'sebastian');
+INSERT INTO D_Password (UserID, Password) VALUES (3, 'bach');
+INSERT INTO D_Password (UserID, Password) VALUES (4, 'a');
+INSERT INTO D_TokenMap (UserID, Token) VALUES (1, 'jan1234');
+INSERT INTO D_TokenMap (UserID, Token) VALUES (2, 'sebastian1234');
+INSERT INTO D_TokenMap (UserID, Token) VALUES (3, 'bach1234');
+INSERT INTO D_TokenMap (UserID, Token) VALUES (4, 'dummyToken');
+INSERT INTO F_Users (ID, Login, Name, Surname, Address, PhoneNumber, JoinDate, PhotoURL) VALUES (1, 'jan@test.com', 'Jan', 'Jan nazwisko', null, null, '14/12/2019', null);
+INSERT INTO F_Users (ID, Login, Name, Surname, Address, PhoneNumber, JoinDate, PhotoURL) VALUES (2, 'sebastian@test.com', 'Sebastian', 'Nazwisko nazwisko', null, null, '14/12/2019', null);
+INSERT INTO F_Users (ID, Login, Name, Surname, Address, PhoneNumber, JoinDate, PhotoURL) VALUES (3, 'bach@test.com', 'Bach', 'Kompozytor', null, null, '14/12/2019', null);
+INSERT INTO F_Users (ID, Login, Name, Surname, Address, PhoneNumber, JoinDate, PhotoURL) VALUES (4, 'maciejewski.torun@gmail.com', 'Ja', 'Gmail', null, null, '14/12/2019', null);
