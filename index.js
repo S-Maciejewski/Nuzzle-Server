@@ -40,7 +40,7 @@ const dummyUsers = [
 
 async function setupServer() {
     // Some DBMS connection?
-    app.listen(port, () => console.log(`Nuzzle server listening on port ${port}`));
+    app.listen(process.env.PORT || port, () => console.log(`Nuzzle server listening on port ${process.env.PORT || port}`));
     // https.createServer(httpsOptions, app).listen(port, () => console.log(`Nuzzle server listening on port ${port}`));
 }
 
