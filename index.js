@@ -22,7 +22,6 @@ function connect() {
     // For demo purposes only, tokens should be JWT with HS256 encryption
     db.all(queries.authData, (err, data) => {
         authData = data;
-        console.log(authData)
     });
 }
 
