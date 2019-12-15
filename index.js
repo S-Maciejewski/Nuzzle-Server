@@ -39,7 +39,7 @@ async function setupServer() {
 }
 
 function getAuthorization(login, password) {
-    let userMatch = authData.filter(user => user.Login === login && user.Password === password)[0]
+    let userMatch = authData.filter(user => user.Login === login && user.Password === password)[0];
     if (userMatch) return { success: true, message: userMatch.Token };
     return { success: false, message: 'Błąd logowania - sprawdź swój login i hasło' };
 }
@@ -85,6 +85,10 @@ app.get('/offerList', (req, res) => {
 
 app.get('/myOffers', (req, res) => {
     getQueryResult(queries.getMyOffers(getUserID(req.headers.authorization)), (err, result) => res.send(result));
+});
+
+app.get('/myOfferList', (req, res) => {
+    getQueryResult(queries.getMyOfferList(getUserID(req.headers.authorization)), (err, result) => res.send(result));
 });
 
 app.get('/offer/:id', (req, res) => {

@@ -24,6 +24,15 @@ module.exports = {
         return `select * from F_Offers where OwnerID = ${ownerID};`;
     },
 
+    getMyOfferList: function (ownerID) {
+        return `
+        select FO.ID as OfferID, TypeID, Type, PostDate, FO.Label, Description, FO.OwnerID, LatitudePos, LongitudePos, DA.Address, Name, Surname, ImageURL
+        from F_Offers FO
+             left join D_Address DA on FO.AddressID = DA.ID
+             join D_OfferType DOT on FO.TypeID = DOT.ID
+            join F_Users FU on FO.OwnerID = FU.ID where FO.OwnerID = ${ownerID};`;
+    },
+
     getOffer: function (offerID) {
         return `select * from F_Offers where ID = ${offerID};`;
     },
@@ -34,7 +43,7 @@ module.exports = {
 
     postOffer: function (ownerID, params) {
         return `insert into F_Offers values (abs(random() % 10000), '${ownerID}', '${params.TypeID}', 
-        '${new Date(Date.now()).toLocaleString('pl', { hour12: false })}', '${params.AddressID}', 
+        '${new Date(Date.now()).toLocaleString('en-GB', { hour12: false })}', '${params.AddressID}', 
         '${params.Price}', '${params.Description}', '${params.ImageURL}', '${params.Label}');`;
     },
 
