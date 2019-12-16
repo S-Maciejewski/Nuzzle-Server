@@ -1,6 +1,7 @@
 const queries = require('./queries.js');
 const express = require('express');
 const sqlite3 = require('sqlite3');
+const randomPuppy = require('random-puppy');
 const cors = require('cors');
 const path = require('path');
 const dbPath = path.resolve(__dirname, 'NuzzleDB.sqlite3'); // Useful in case of path problems when deployed to heroku
@@ -56,6 +57,7 @@ function executeUpdateQuery(query) {
 function getQueryResult(query, callback) {
     return db.all(query, callback);
 }
+
 // No token validation on each request implemented for now, if we proceed to production: authentication on each request
 app.post('/login', (req, res) => {
     res.send(getAuthorization(req.body.login, req.body.password));
@@ -72,7 +74,10 @@ app.get('/user/:id', (req, res) => {
 // Offer
 app.post('/offer', (req, res) => {
     console.debug('POST /offer, req.body:', req.body);
-    res.send({ success: executeUpdateQuery(queries.postOffer(getUserID(req.headers.authorization), req.body)).open });
+    randomPuppy().then(url => {
+        req.body.ImageURL = url.replace('http', 'https');
+        res.send({ success: executeUpdateQuery(queries.postOffer(getUserID(req.headers.authorization), req.body)).open });
+    });
 });
 
 app.get('/offer', (req, res) => {

@@ -26,7 +26,8 @@ module.exports = {
 
     getMyOfferList: function (ownerID) {
         return `
-        select FO.ID as OfferID, TypeID, Type, PostDate, FO.Label, Description, FO.OwnerID, LatitudePos, LongitudePos, DA.Address, Name, Surname, ImageURL
+        select FO.ID as OfferID, TypeID, Type, PostDate, FO.Label, Description, FO.OwnerID, LatitudePos, LongitudePos, 
+        DA.Address, Name, Surname, ImageURL, Price, PhoneNumber
         from F_Offers FO
              left join D_Address DA on FO.AddressID = DA.ID
              join D_OfferType DOT on FO.TypeID = DOT.ID
