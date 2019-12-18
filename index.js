@@ -85,7 +85,7 @@ app.get('/offer', (req, res) => {
 });
 
 app.get('/offerList', (req, res) => {
-    getQueryResult(queries.offerList, (err, result) => res.send(result));
+    getQueryResult(queries.offerList(getUserID(req.headers.authorization)), (err, result) => res.send(result));
 });
 
 app.get('/myOffers', (req, res) => {
