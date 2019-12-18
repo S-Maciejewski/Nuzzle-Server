@@ -12,14 +12,15 @@ module.exports = {
     // Offer
     offers: 'select * from F_Offers;',
 
-    offerList: `
+    offerList: function (ownerID) {
+        return `
     select FO.ID as OfferID, TypeID, Type, PostDate, FO.Label, Description, FO.OwnerID, LatitudePos, LongitudePos, 
     DA.Address, Name, Surname, ImageURL, Price, PhoneNumber
     from F_Offers FO
          left join D_Address DA on FO.AddressID = DA.ID
          join D_OfferType DOT on FO.TypeID = DOT.ID
-        join F_Users FU on FO.OwnerID = FU.ID;
-    `,
+        join F_Users FU on FO.OwnerID = FU.ID where FO.OwnerID != ${ownerID};;
+    `},
 
     getMyOffers: function (ownerID) {
         return `select * from F_Offers where OwnerID = ${ownerID};`;
